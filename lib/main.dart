@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/screens/home_page.dart';
+import 'package:smart_home/configs/app_routes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -10,10 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: HomePage(),
+      routerConfig: router,
     );
   }
 }
