@@ -10,7 +10,7 @@ final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: PathRoute.splash,
+  initialLocation: PathRoute.main,
   routes: <RouteBase>[
     GoRoute(
       path: PathRoute.splash,
