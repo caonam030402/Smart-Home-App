@@ -6,4 +6,6 @@ class PathIcons {
   static const ic_home_stroke = '${icon}ic_home_stroke.svg';
   static const ic_user_stroke = '${icon}ic_user_stroke.svg';
   static const ic_user_fill = '${icon}ic_user_fill.svg';
+  static const ic_menu = '${icon}ic_menu.svg';
+  static const ic_sunny = '${icon}ic_sunny.svg';
 }

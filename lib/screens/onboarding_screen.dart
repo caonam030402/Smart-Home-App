@@ -68,14 +68,14 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 25,
                 ),
-                Text(
+                const Text(
                   'Easier Life With Smart Home',
                   style: TextStyle(
                       fontSize: 50,
                       color: AppColors.white,
                       fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
@@ -83,7 +83,7 @@ class OnboardingScreen extends StatelessWidget {
                   style: AppText.medium.copyWith(
                       color: AppColors.white, fontWeight: FontWeight.w400),
                 ),
-                Spacer(),
+                const Spacer(),
                 SlideAction(
                   key: _key,
                   onSubmit: () {
@@ -93,7 +93,7 @@ class OnboardingScreen extends StatelessWidget {
                     // );
                     context.go(PathRoute.main);
                   },
-                  sliderButtonIcon: Icon(
+                  sliderButtonIcon: const Icon(
                     Icons.keyboard_arrow_right,
                     color: AppColors.primary,
                   ),
@@ -104,7 +104,7 @@ class OnboardingScreen extends StatelessWidget {
                     'Start',
                     style: AppText.heading4.copyWith(color: AppColors.white),
                   ),
-                  submittedIcon: Icon(
+                  submittedIcon: const Icon(
                     Icons.done,
                     size: 30,
                     color: AppColors.white,

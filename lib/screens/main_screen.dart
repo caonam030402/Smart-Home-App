@@ -56,7 +56,11 @@ class MyBottomNavigation extends StatelessWidget {
               top: 30,
               bottom: 0,
               child: Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    color: Colors.white.withOpacity(0.4)),
                 height: 50,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
