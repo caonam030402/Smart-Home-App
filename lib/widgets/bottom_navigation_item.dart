@@ -22,7 +22,9 @@ class BottomNavigationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: IconButton(
-      onPressed: onPressed,
+      onPressed: () {
+        onPressed();
+      },
       icon: SvgPicture.asset(
         index == name ? iconActive : icon,
         colorFilter: ColorFilter.mode(

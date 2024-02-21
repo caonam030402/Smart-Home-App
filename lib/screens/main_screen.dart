@@ -8,7 +8,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-enum Menus { home, message, search }
+enum Menus {
+  home,
+  message,
+}
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -37,7 +40,6 @@ class _MainScreenState extends State<MainScreen> {
   final pages = <Widget>[
     HomeScreen(),
     const Center(child: Text('Message')),
-    const Center(child: Text('Add')),
   ];
 }
 
@@ -55,6 +57,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
+  bool _isIgnor = false;
 
   @override
   void initState() {
@@ -64,7 +67,9 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
 
   void _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();
-    setState(() {});
+    setState(() {
+      _speechEnabled = false;
+    });
   }
 
   void _startListening() async {
@@ -82,76 +87,53 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    print(result.recognizedWords);
     setState(() {
       _lastWords = result.recognizedWords;
     });
+    Future.delayed(
+      Duration(milliseconds: 3000),
+      () {
+        setState(() {
+          _speechEnabled = false;
+        });
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_lastWords);
     return Container(
       height: 100,
       child: Stack(
         children: [
           Positioned(
+              top: 30,
               right: 0,
               left: 0,
-              top: 30,
               bottom: 0,
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
                         topRight: Radius.circular(15)),
-                    color: Colors.white.withOpacity(0.4)),
+                    color: Colors.white.withOpacity(1)),
                 height: 50,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        // If listening is active show the recognized words
-                        _speechToText.isListening
-                            ? '$_lastWords'
-                            // If listening isn't active but could be tell the user
-                            // how to start it, otherwise indicate that speech
-                            // recognition is not yet ready or not supported on
-                            // the target device
-                            : _speechEnabled
-                                ? 'Tap the microphone to start listening...'
-                                : 'Speech not available',
-                      ),
-                      BottomNavigationItem(
-                          onPressed: () => widget.onTap(Menus.home),
-                          index: widget.currentIndex,
-                          name: Menus.home,
-                          iconActive: PathIcons.ic_home_fill,
-                          icon: PathIcons.ic_home_stroke),
-                      const Spacer(),
-                      BottomNavigationItem(
-                          onPressed: () => widget.onTap(Menus.message),
-                          index: widget.currentIndex,
-                          name: Menus.message,
-                          iconActive: PathIcons.ic_user_fill,
-                          icon: PathIcons.ic_user_stroke),
-                    ],
-                  ),
-                ),
               )),
           Positioned(
-              top: 13,
+              top: 10,
               right: 0,
               left: 0,
-              child: GestureDetector(
-                onTap: _speechToText.isNotListening
-                    ? _startListening
-                    : _stopListening,
-                child: AvatarGlow(
-                  animate: _speechEnabled,
-                  duration: Duration(milliseconds: 1000),
-                  glowColor: AppColors.primary,
-                  repeat: true,
+              child: AvatarGlow(
+                glowShape: BoxShape.circle,
+                animate: _speechEnabled,
+                duration: Duration(milliseconds: 1000),
+                glowColor: AppColors.primary,
+                repeat: true,
+                child: GestureDetector(
+                  onTap: _speechToText.isNotListening
+                      ? _startListening
+                      : _stopListening,
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     width: 60,
@@ -163,6 +145,38 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
                       color: AppColors.white,
                     ),
                   ),
+                ),
+              )),
+          Positioned(
+              right: 0,
+              left: 0,
+              top: 30,
+              bottom: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    // Text(
+                    //   _speechToText.isListening
+                    //       ? '$_lastWords'
+                    //       : _speechEnabled
+                    //           ? 'Tap the microphone to start listening...'
+                    //           : 'Speech not available',
+                    // ),
+                    BottomNavigationItem(
+                        onPressed: () => widget.onTap(Menus.home),
+                        index: widget.currentIndex,
+                        name: Menus.home,
+                        iconActive: PathIcons.ic_home_fill,
+                        icon: PathIcons.ic_home_stroke),
+                    const Spacer(),
+                    BottomNavigationItem(
+                        onPressed: () => widget.onTap(Menus.message),
+                        index: widget.currentIndex,
+                        name: Menus.message,
+                        iconActive: PathIcons.ic_user_fill,
+                        icon: PathIcons.ic_user_stroke),
+                  ],
                 ),
               ))
         ],

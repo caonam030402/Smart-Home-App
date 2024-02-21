@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
+import 'package:smart_home/components/card_device.dart';
+import 'package:smart_home/components/tab_bar_home.dart';
+import 'package:smart_home/constants/path_icons.dart';
 import 'package:smart_home/constants/path_images.dart';
 import 'package:smart_home/styles/app_colors.dart';
 import 'package:smart_home/styles/app_styles.dart';
@@ -23,7 +26,7 @@ class HomeScreen extends StatelessWidget {
         Container(
           width: double.infinity,
           height: double.infinity,
-          color: AppColors.white.withOpacity(0.7),
+          color: Color.fromARGB(255, 238, 241, 242).withOpacity(1),
         ),
         Padding(
           padding:
@@ -38,11 +41,11 @@ class HomeScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      maxRadius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://scontent.fdad3-4.fna.fbcdn.net/v/t39.30808-6/306135507_1211755559394586_7445899947695751742_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9c7eae&_nc_eui2=AeG3XOU_FtPpLfAhVhnb4qJdhSPDzNnfc2iFI8PM2d9zaLRhiP2fvg7dEF11BeY4FSJunVUN8DrYOX5-pTLhc53R&_nc_ohc=c2nk4Fgzlw8AX_tYfi6&_nc_ht=scontent.fdad3-4.fna&oh=00_AfByyXoB50Mkdn2cz_-LPDeymEv05B9oWfn5C3Plm-VcXg&oe=65D8AA7E'),
-                    ),
+                    // CircleAvatar(
+                    //   maxRadius: 25,
+                    //   backgroundImage: NetworkImage(
+                    //       'https://scontent.fdad3-4.fna.fbcdn.net/v/t39.30808-6/306135507_1211755559394586_7445899947695751742_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9c7eae&_nc_eui2=AeG3XOU_FtPpLfAhVhnb4qJdhSPDzNnfc2iFI8PM2d9zaLRhiP2fvg7dEF11BeY4FSJunVUN8DrYOX5-pTLhc53R&_nc_ohc=c2nk4Fgzlw8AX_tYfi6&_nc_ht=scontent.fdad3-4.fna&oh=00_AfByyXoB50Mkdn2cz_-LPDeymEv05B9oWfn5C3Plm-VcXg&oe=65D8AA7E'),
+                    // ),
                     SizedBox(
                       width: 10,
                     ),
@@ -61,16 +64,17 @@ class HomeScreen extends StatelessWidget {
                                     .copyWith(fontWeight: FontWeight.w600)),
                           ],
                         ),
-                        Text('Wellcome to gPBL home',
+                        Text('Wellcome to smart home',
                             style:
                                 AppText.medium.copyWith(color: Colors.black54))
                       ],
                     ),
                     Spacer(),
-                    Icon(
-                      Icons.settings,
-                      size: 20,
-                    )
+                    CircleAvatar(
+                      maxRadius: 25,
+                      backgroundImage: NetworkImage(
+                          'https://scontent.fdad3-4.fna.fbcdn.net/v/t39.30808-6/306135507_1211755559394586_7445899947695751742_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9c7eae&_nc_eui2=AeG3XOU_FtPpLfAhVhnb4qJdhSPDzNnfc2iFI8PM2d9zaLRhiP2fvg7dEF11BeY4FSJunVUN8DrYOX5-pTLhc53R&_nc_ohc=c2nk4Fgzlw8AX_tYfi6&_nc_ht=scontent.fdad3-4.fna&oh=00_AfByyXoB50Mkdn2cz_-LPDeymEv05B9oWfn5C3Plm-VcXg&oe=65D8AA7E'),
+                    ),
                   ],
                 ),
               ),
@@ -85,56 +89,9 @@ class HomeScreen extends StatelessWidget {
                   height: 15,
                 ),
               ),
-              SliverGrid.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.white.withOpacity(0.5),
-                          AppColors.white.withOpacity(0.6)
-                        ],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.white.withOpacity(0.5),
-                            AppColors.white.withOpacity(0.6)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        )),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.white.withOpacity(0.5),
-                    ),
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.white.withOpacity(0.5),
-                        AppColors.white.withOpacity(0.6)
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                  )),
-                ],
-              )
+              SliverFillRemaining(
+                child: TabBarHome(),
+              ),
             ],
           ),
         ),
@@ -149,7 +106,7 @@ class InformationSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -164,7 +121,11 @@ class InformationSheet extends StatelessWidget {
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
           ),
-          borderRadius: BorderRadius.circular(20)),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30))),
       child: Column(
         children: [
           Row(
@@ -185,7 +146,7 @@ class InformationSheet extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              Text('28°C',
+              Text('25°C',
                   style: AppText.heading1.copyWith(
                       color: AppColors.white,
                       fontSize: 40,
@@ -195,63 +156,83 @@ class InformationSheet extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      '31°',
-                      style: AppText.heading4.copyWith(
-                        color: AppColors.white,
-                      ),
-                    ),
-                    Text(
-                      'Sensible',
-                      style: AppText.small.copyWith(
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ],
-                ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(45)),
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.white.withOpacity(0.2),
+                  AppColors.white.withOpacity(0.2)
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
               ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      '31%',
-                      style: AppText.heading4.copyWith(
-                        color: AppColors.white,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        '31°',
+                        style: AppText.heading4.copyWith(
+                          color: AppColors.white,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Humidity',
-                      style: AppText.small.copyWith(
-                        color: AppColors.white,
+                      Text(
+                        'Sensible',
+                        style: AppText.small.copyWith(
+                          color: AppColors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      '3',
-                      style: AppText.heading4.copyWith(
-                        color: AppColors.white,
-                      ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.symmetric(
+                            vertical: BorderSide(
+                                color: AppColors.white.withOpacity(0.4)))),
+                    child: Column(
+                      children: [
+                        Text(
+                          '75%',
+                          style: AppText.heading4.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
+                        Text(
+                          'Humidity',
+                          style: AppText.small.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'W. force',
-                      style: AppText.small.copyWith(
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        '3',
+                        style: AppText.heading4.copyWith(
+                          color: AppColors.white,
+                        ),
+                      ),
+                      Text(
+                        'W. force',
+                        style: AppText.small.copyWith(
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
