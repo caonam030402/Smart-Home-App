@@ -1,12 +1,16 @@
+import 'dart:convert';
+import 'dart:ffi';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
-import 'package:smart_home/components/card_device.dart';
+import 'package:smart_home/components/location.dart';
 import 'package:smart_home/components/tab_bar_home.dart';
-import 'package:smart_home/constants/path_icons.dart';
 import 'package:smart_home/constants/path_images.dart';
 import 'package:smart_home/styles/app_colors.dart';
 import 'package:smart_home/styles/app_styles.dart';
 import 'package:smart_home/styles/app_text.dart';
+import 'package:smart_home/utilities/caculate.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -105,137 +109,165 @@ class InformationSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xffDDDDDD),
-              blurRadius: 0.3,
-              spreadRadius: 0,
-              offset: Offset(0.0, 0.0),
-            )
-          ],
-          gradient: LinearGradient(
-            colors: [AppColors.primary.withOpacity(0.6), AppColors.primary],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          ),
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30),
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30))),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Image.asset(PathImage.im_sunny, height: 50),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Cloudy',
-                      style: AppText.heading3.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.white,
-                      )),
-                  Text('Da Nang, Viet Nam',
-                      style: AppText.small.copyWith(
-                        color: AppColors.white,
-                      ))
-                ],
-              ),
-              Spacer(),
-              Text('25°C',
-                  style: AppText.heading1.copyWith(
-                      color: AppColors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w600)),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(45)),
+    final databaseReference = FirebaseDatabase.instance.ref("");
+
+    return StreamBuilder(
+      stream: databaseReference.onValue,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(); // Show loading indicator while data is being fetched
+        }
+
+        final dynamic rawData = snapshot.data!.snapshot.value;
+
+        if (rawData == null || !(rawData is Map)) {
+          return Text('Data is not available or invalid.');
+        }
+
+        final sensorsData = rawData['sensors'];
+
+        num? temperature;
+        num? humidity;
+
+        if (sensorsData is Map) {
+          temperature = sensorsData['temperature'];
+          humidity = sensorsData['humidity'];
+        }
+
+        num sensible =
+            calculateSensibleTemperature(temperature ?? 0, humidity ?? 0)
+                .toInt();
+
+        return Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0xffDDDDDD),
+                  blurRadius: 0.3,
+                  spreadRadius: 0,
+                  offset: Offset(0.0, 0.0),
+                )
+              ],
               gradient: LinearGradient(
-                colors: [
-                  AppColors.white.withOpacity(0.2),
-                  AppColors.white.withOpacity(0.2)
-                ],
+                colors: [AppColors.primary.withOpacity(0.6), AppColors.primary],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
               ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30))),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Image.asset(PathImage.im_sunny, height: 50),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '31°',
-                        style: AppText.heading4.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                      Text(
-                        'Sensible',
-                        style: AppText.small.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
+                      Text('Cloudy',
+                          style: AppText.heading3.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.white,
+                          )),
+                      Location(),
                     ],
                   ),
+                  Spacer(),
+                  Text('${temperature.toString()}°',
+                      style: AppText.heading1.copyWith(
+                          color: AppColors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.w600)),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(45)),
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.white.withOpacity(0.2),
+                      AppColors.white.withOpacity(0.2)
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
                 ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.symmetric(
-                            vertical: BorderSide(
-                                color: AppColors.white.withOpacity(0.4)))),
-                    child: Column(
-                      children: [
-                        Text(
-                          '75%',
-                          style: AppText.heading4.copyWith(
-                            color: AppColors.white,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            '${sensible.toString()}°',
+                            style: AppText.heading4.copyWith(
+                              color: AppColors.white,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Humidity',
-                          style: AppText.small.copyWith(
-                            color: AppColors.white,
+                          Text(
+                            'Sensible',
+                            style: AppText.small.copyWith(
+                              color: AppColors.white,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        '3',
-                        style: AppText.heading4.copyWith(
-                          color: AppColors.white,
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.symmetric(
+                                vertical: BorderSide(
+                                    color: AppColors.white.withOpacity(0.4)))),
+                        child: Column(
+                          children: [
+                            Text(
+                              '${humidity.toString()}%',
+                              style: AppText.heading4.copyWith(
+                                color: AppColors.white,
+                              ),
+                            ),
+                            Text(
+                              'Humidity',
+                              style: AppText.small.copyWith(
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        'W. force',
-                        style: AppText.small.copyWith(
-                          color: AppColors.white,
-                        ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            '3',
+                            style: AppText.heading4.copyWith(
+                              color: AppColors.white,
+                            ),
+                          ),
+                          Text(
+                            'W. force',
+                            style: AppText.small.copyWith(
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

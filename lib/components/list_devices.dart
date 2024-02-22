@@ -10,7 +10,7 @@ class ListDevices extends StatelessWidget {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.9,
+        childAspectRatio: 0.8,
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,
       ),
@@ -37,9 +37,9 @@ class Device {
 
 List<Device> devices = [
   Device(icon: PathIcons.ic_voice, isOnToDB: false, name: 'Lighting'),
-  Device(icon: PathIcons.ic_voice, isOnToDB: true, name: 'Another Device'),
-  Device(icon: PathIcons.ic_voice, isOnToDB: true, name: 'Another Device'),
-  Device(icon: PathIcons.ic_voice, isOnToDB: true, name: 'Another Device'),
+  Device(icon: PathIcons.ic_voice, isOnToDB: true, name: 'Lighting'),
+  Device(icon: PathIcons.ic_voice, isOnToDB: true, name: 'Lighting'),
+  Device(icon: PathIcons.ic_voice, isOnToDB: true, name: 'Lighting'),
 
   // Thêm các thiết bị khác vào đây
 ];

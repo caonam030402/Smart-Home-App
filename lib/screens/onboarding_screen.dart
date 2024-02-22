@@ -87,10 +87,6 @@ class OnboardingScreen extends StatelessWidget {
                 SlideAction(
                   key: _key,
                   onSubmit: () {
-                    // Future.delayed(
-                    //   Duration(seconds: 1),
-                    //   () => _key.currentState!.activate(),
-                    // );
                     context.go(PathRoute.main);
                   },
                   sliderButtonIcon: const Icon(

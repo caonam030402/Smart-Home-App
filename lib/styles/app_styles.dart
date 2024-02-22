@@ -1,3 +1,3 @@
 class AppStyles {
-  static const double paddingBothSidesPage = 17;
+  static const double paddingBothSidesPage = 20;
 }

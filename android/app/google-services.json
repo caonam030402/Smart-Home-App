@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_number": "1012672490302",
-    "firebase_url": "https://smart-home-8ddc1-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "smart-home-8ddc1",
-    "storage_bucket": "smart-home-8ddc1.appspot.com"
+    "project_number": "371556000831",
+    "firebase_url": "https://smarthome-7a84a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smarthome-7a84a",
+    "storage_bucket": "smarthome-7a84a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1012672490302:android:a75ac4badf9434be729a6f",
+        "mobilesdk_app_id": "1:371556000831:android:083fdb8abdf36ec2efc48a",
         "android_client_info": {
           "package_name": "com.example.smart_home"
         }
@@ -16,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBnjwp3mSDKYeCQoIN10P6sPSayCCyLOMA"
+          "current_key": "AIzaSyDWPoNkYHQ63UPXhjOkL1lqGcevg2by4q4"
         }
       ],
       "services": {

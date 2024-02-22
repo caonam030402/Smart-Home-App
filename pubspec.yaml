@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  geolocator: ^7.0.3
+  geocoding: ^2.0.1
   go_router: ^13.2.0
   animated_splash_screen: ^1.3.0
   flutter_svg: ^2.0.9
@@ -41,6 +43,9 @@ dependencies:
   firebase_core: ^2.25.4
   speech_to_text: ^6.6.0
   avatar_glow: ^3.0.1
+  color_picker_field: ^2.1.0
+  flex_color_picker: ^3.3.1
+  flutter_circle_color_picker: ^0.3.0
 
 dev_dependencies:
   flutter_test:
