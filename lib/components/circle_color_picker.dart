@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:smart_home/styles/app_colors.dart';
 import 'package:smart_home/styles/app_styles.dart';
 import 'package:smart_home/styles/app_text.dart';
 
@@ -108,6 +109,7 @@ class _CircleColorPickerState extends State<CircleColorPicker>
 
   @override
   Widget build(BuildContext context) {
+    final databaseReference = FirebaseDatabase.instance.ref("");
     return SizedBox(
       width:
           MediaQuery.sizeOf(context).width - AppStyles.paddingBothSidesPage * 2,
@@ -153,6 +155,33 @@ class _CircleColorPickerState extends State<CircleColorPicker>
                                       color: _color,
                                       shape: BoxShape.circle,
                                     ),
+                                    child: Center(
+                                        child: GestureDetector(
+                                      onTap: () {
+                                        databaseReference.update(
+                                          {
+                                            "light_control/colors/": {
+                                              "blue":
+                                                  widget.controller?.color.blue,
+                                              "red":
+                                                  widget.controller?.color.red,
+                                              "green":
+                                                  widget.controller?.color.green
+                                            }
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(200)),
+                                        height: 30,
+                                        child:
+                                            const Center(child: Text('Update')),
+                                      ),
+                                    )),
                                   ),
                                   const SizedBox(height: 16),
                                 ],
@@ -165,14 +194,14 @@ class _CircleColorPickerState extends State<CircleColorPicker>
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 'Color intensity',
                 style: AppText.large,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -292,9 +321,9 @@ class _LightnessSliderState extends State<_LightnessSlider>
               width: double.infinity,
               height: 5.5,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(6)),
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
                 gradient: LinearGradient(
-                  stops: [0, 0.4, 1],
+                  stops: const [0, 0.4, 1],
                   colors: [
                     HSLColor.fromAHSL(1, widget.hue, 1, 0).toColor(),
                     HSLColor.fromAHSL(1, widget.hue, 1, 0.5).toColor(),
@@ -332,7 +361,7 @@ class _LightnessSliderState extends State<_LightnessSlider>
       value: 1,
       lowerBound: 0.9,
       upperBound: 1,
-      duration: Duration(milliseconds: 50),
+      duration: const Duration(milliseconds: 50),
     );
   }
 
@@ -455,7 +484,7 @@ class _HuePickerState extends State<_HuePicker> with TickerProviderStateMixin {
       value: 1,
       lowerBound: 0.9,
       upperBound: 1,
-      duration: Duration(milliseconds: 50),
+      duration: const Duration(milliseconds: 50),
     );
   }
 
@@ -577,11 +606,11 @@ class _Thumb extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: Color.fromARGB(255, 255, 255, 255),
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Color.fromARGB(16, 0, 0, 0),
             blurRadius: 4,
             spreadRadius: 4,

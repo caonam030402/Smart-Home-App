@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
@@ -24,19 +22,20 @@ class HomeScreen extends StatelessWidget {
                 fit: BoxFit.cover)
             .blurred(
           colorOpacity: 0.2,
-          borderRadius: BorderRadius.horizontal(right: Radius.circular(5)),
+          borderRadius:
+              const BorderRadius.horizontal(right: Radius.circular(5)),
         ),
         Container(
           width: double.infinity,
           height: double.infinity,
-          color: Color.fromARGB(255, 238, 241, 242).withOpacity(1),
+          color: const Color.fromARGB(255, 238, 241, 242).withOpacity(1),
         ),
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: AppStyles.paddingBothSidesPage),
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppStyles.paddingBothSidesPage),
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 55,
                 ),
@@ -49,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                     //   backgroundImage: NetworkImage(
                     //       'https://scontent.fdad3-4.fna.fbcdn.net/v/t39.30808-6/306135507_1211755559394586_7445899947695751742_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9c7eae&_nc_eui2=AeG3XOU_FtPpLfAhVhnb4qJdhSPDzNnfc2iFI8PM2d9zaLRhiP2fvg7dEF11BeY4FSJunVUN8DrYOX5-pTLhc53R&_nc_ohc=c2nk4Fgzlw8AX_tYfi6&_nc_ht=scontent.fdad3-4.fna&oh=00_AfByyXoB50Mkdn2cz_-LPDeymEv05B9oWfn5C3Plm-VcXg&oe=65D8AA7E'),
                     // ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
@@ -72,8 +71,8 @@ class HomeScreen extends StatelessWidget {
                                 AppText.medium.copyWith(color: Colors.black54))
                       ],
                     ),
-                    Spacer(),
-                    CircleAvatar(
+                    const Spacer(),
+                    const CircleAvatar(
                       maxRadius: 25,
                       backgroundImage: NetworkImage(
                           'https://scontent.fdad3-4.fna.fbcdn.net/v/t39.30808-6/306135507_1211755559394586_7445899947695751742_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9c7eae&_nc_eui2=AeG3XOU_FtPpLfAhVhnb4qJdhSPDzNnfc2iFI8PM2d9zaLRhiP2fvg7dEF11BeY4FSJunVUN8DrYOX5-pTLhc53R&_nc_ohc=c2nk4Fgzlw8AX_tYfi6&_nc_ht=scontent.fdad3-4.fna&oh=00_AfByyXoB50Mkdn2cz_-LPDeymEv05B9oWfn5C3Plm-VcXg&oe=65D8AA7E'),
@@ -81,18 +80,18 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 20,
                 ),
               ),
-              SliverToBoxAdapter(child: InformationSheet()),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(child: InformationSheet()),
+              const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 15,
                 ),
               ),
-              SliverFillRemaining(
+              const SliverFillRemaining(
                 child: TabBarHome(),
               ),
             ],
@@ -108,8 +107,6 @@ class InformationSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isLoading = false;
-
     final databaseReference = FirebaseDatabase.instance.ref("");
 
     return StreamBuilder(
@@ -121,8 +118,8 @@ class InformationSheet extends StatelessWidget {
 
         final dynamic rawData = snapshot.data!.snapshot.value;
 
-        if (rawData == null || !(rawData is Map)) {
-          return Text('Data is not available or invalid.');
+        if (rawData == null || rawData is! Map) {
+          return const Text('Data is not available or invalid.');
         }
 
         final sensorsData = rawData['sensors'];
@@ -132,6 +129,7 @@ class InformationSheet extends StatelessWidget {
 
         if (sensorsData is Map) {
           temperature = sensorsData['temperature'];
+
           humidity = sensorsData['humidity'];
         }
 
@@ -140,9 +138,9 @@ class InformationSheet extends StatelessWidget {
                 .toInt();
 
         return Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Color(0xffDDDDDD),
                   blurRadius: 0.3,
@@ -155,7 +153,7 @@ class InformationSheet extends StatelessWidget {
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
               ),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
@@ -173,10 +171,10 @@ class InformationSheet extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                             color: AppColors.white,
                           )),
-                      Location(),
+                      const Location(),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text('${temperature!.toInt().toString()}°',
                       style: AppText.heading1.copyWith(
                           color: AppColors.white,
@@ -184,13 +182,13 @@ class InformationSheet extends StatelessWidget {
                           fontWeight: FontWeight.w600)),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(45)),
+                  borderRadius: const BorderRadius.all(Radius.circular(45)),
                   gradient: LinearGradient(
                     colors: [
                       AppColors.white.withOpacity(0.2),

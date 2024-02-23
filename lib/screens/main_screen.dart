@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/constants/text_voice.dart';
 import 'package:smart_home/screens/home_screen.dart';
 import 'package:smart_home/widgets/bottom_navigation_item.dart';
 import 'package:smart_home/constants/path_icons.dart';
@@ -92,6 +93,41 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
     ref.update({
       "voice_control": {"command": result.recognizedWords, "enforcement": true}
     });
+
+    if (TextVoice.turn_off_light == result.recognizedWords) {
+      ref.update({"light_control/status": false});
+    }
+
+    if (TextVoice.turn_on_light == result.recognizedWords) {
+      ref.update({"light_control/status": true});
+    }
+
+    if (TextVoice.turn_off_fan == result.recognizedWords) {
+      ref.update({"fan_control/status": false});
+    }
+
+    if (TextVoice.turn_on_fan == result.recognizedWords) {
+      ref.update({"fan_control/status": true});
+    }
+
+    if (TextVoice.turn_on_all == result.recognizedWords) {
+      ref.update(
+        {"fan_control/status": true},
+      );
+      ref.update(
+        {"light_control/status": true},
+      );
+    }
+
+    if (TextVoice.turn_off_all == result.recognizedWords) {
+      ref.update(
+        {"fan_control/status": false},
+      );
+      ref.update(
+        {"light_control/status": false},
+      );
+    }
+
     setState(() {
       _lastWords = result.recognizedWords;
     });

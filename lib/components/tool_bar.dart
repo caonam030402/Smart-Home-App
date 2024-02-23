@@ -6,9 +6,9 @@ import 'package:smart_home/styles/app_text.dart';
 
 class ToolBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final List<Widget>? actions;
+  final Widget? action;
 
-  const ToolBar({super.key, required this.title, this.actions});
+  const ToolBar({super.key, required this.title, this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,6 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
         bottomLeft: Radius.circular(25),
         bottomRight: Radius.circular(25),
       )),
-      padding: EdgeInsets.symmetric(vertical: 15),
       child: Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: AppStyles.paddingBothSidesPage),
@@ -45,20 +44,25 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                   ),
-                  Text(
-                    title,
-                    style: AppText.heading4.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.black.withOpacity(0.8)),
+                  Positioned(
+                    right: 0,
+                    left: 0,
+                    child: Text(
+                      title,
+                      style: AppText.heading4.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.black.withOpacity(0.8)),
+                    ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        color: AppColors.black.withOpacity(0)),
-                  ),
+                  action ??
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: AppColors.black.withOpacity(0)),
+                      ),
                 ],
               ),
             ),
