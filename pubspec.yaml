@@ -46,6 +46,7 @@ dependencies:
   color_picker_field: ^2.1.0
   flex_color_picker: ^3.3.1
   flutter_circle_color_picker: ^0.3.0
+  skeletonizer: ^1.0.1
 
 dev_dependencies:
   flutter_test:

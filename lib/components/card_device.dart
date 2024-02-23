@@ -1,6 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smart_home/components/switch.dart';
 import 'package:smart_home/constants/path_icons.dart';
 import 'package:smart_home/constants/path_routes.dart';
@@ -12,7 +14,12 @@ class CardDevice extends StatefulWidget {
   final nameDevice;
   final isOnToDB;
 
-  const CardDevice({super.key, this.icon, this.nameDevice, this.isOnToDB});
+  const CardDevice({
+    super.key,
+    this.icon,
+    this.nameDevice,
+    this.isOnToDB,
+  });
 
   @override
   State<CardDevice> createState() => _CardDeviceState();
@@ -29,9 +36,10 @@ class _CardDeviceState extends State<CardDevice> {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseReference ref = FirebaseDatabase.instance.ref("");
     return GestureDetector(
       onTap: () {
-        context.go(PathRoute.lightManagement);
+        context.push(PathRoute.lightManagement);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
@@ -122,6 +130,13 @@ class _CardDeviceState extends State<CardDevice> {
                 const Spacer(),
                 SwitchCustom(
                   onChanged: (value) {
+                    if (widget.nameDevice == 'Lighting') {
+                      ref.update({"light_control/status": value});
+                    }
+                    if (widget.nameDevice == 'Fan') {
+                      ref.update({"fan_control/status": value});
+                    }
+
                     setState(() {
                       isActive = value;
                     });

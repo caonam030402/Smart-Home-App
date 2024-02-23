@@ -1,4 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/screens/home_screen.dart';
 import 'package:smart_home/widgets/bottom_navigation_item.dart';
@@ -54,6 +55,7 @@ class MyBottomNavigation extends StatefulWidget {
 }
 
 class _MyBottomNavigationState extends State<MyBottomNavigation> {
+  DatabaseReference ref = FirebaseDatabase.instance.ref("");
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
@@ -87,6 +89,9 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
+    ref.update({
+      "voice_control": {"command": result.recognizedWords, "enforcement": true}
+    });
     setState(() {
       _lastWords = result.recognizedWords;
     });

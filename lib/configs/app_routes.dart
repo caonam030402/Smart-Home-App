@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_home/constants/path_routes.dart';
+import 'package:smart_home/screens/home_screen.dart';
 import 'package:smart_home/screens/light_management_screen.dart';
 import 'package:smart_home/screens/main_screen.dart';
 import 'package:smart_home/screens/onboarding_screen.dart';
@@ -11,7 +12,7 @@ final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: PathRoute.main,
+  initialLocation: PathRoute.onboarding,
   routes: <RouteBase>[
     GoRoute(
       path: PathRoute.splash,
@@ -32,9 +33,9 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: PathRoute.main,
+      path: PathRoute.home,
       builder: (BuildContext context, GoRouterState state) {
-        return const MainScreen();
+        return const HomeScreen();
       },
     ),
     GoRoute(

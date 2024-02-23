@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -109,13 +108,15 @@ class InformationSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isLoading = false;
+
     final databaseReference = FirebaseDatabase.instance.ref("");
 
     return StreamBuilder(
       stream: databaseReference.onValue,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(); // Show loading indicator while data is being fetched
+          return Container();
         }
 
         final dynamic rawData = snapshot.data!.snapshot.value;
@@ -176,7 +177,7 @@ class InformationSheet extends StatelessWidget {
                     ],
                   ),
                   Spacer(),
-                  Text('${temperature.toString()}°',
+                  Text('${temperature!.toInt().toString()}°',
                       style: AppText.heading1.copyWith(
                           color: AppColors.white,
                           fontSize: 40,

@@ -26,7 +26,7 @@ class CircleColorPicker extends StatefulWidget {
     Key? key,
     this.onChanged,
     this.onEnded,
-    this.size = const Size(280, 280),
+    this.size = const Size(240, 240),
     this.strokeWidth = 15,
     this.thumbSize = 32,
     this.controller,
@@ -175,16 +175,20 @@ class _CircleColorPickerState extends State<CircleColorPicker>
               SizedBox(
                 height: 10,
               ),
-              _LightnessSlider(
-                width: MediaQuery.sizeOf(context).width -
-                    AppStyles.paddingBothSidesPage * 2,
-                thumbSize: 30,
-                hue: _hueController.value,
-                lightness: _lightnessController.value,
-                onEnded: _onEnded,
-                onChanged: (lightness) {
-                  _lightnessController.value = lightness;
-                },
+              Row(
+                children: [
+                  _LightnessSlider(
+                    width: MediaQuery.sizeOf(context).width -
+                        AppStyles.paddingBothSidesPage * 2,
+                    thumbSize: 30,
+                    hue: _hueController.value,
+                    lightness: _lightnessController.value,
+                    onEnded: _onEnded,
+                    onChanged: (lightness) {
+                      _lightnessController.value = lightness;
+                    },
+                  )
+                ],
               ),
             ],
           ),
@@ -286,7 +290,7 @@ class _LightnessSliderState extends State<_LightnessSlider>
           children: <Widget>[
             Container(
               width: double.infinity,
-              height: 12,
+              height: 5.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(6)),
                 gradient: LinearGradient(
@@ -304,7 +308,7 @@ class _LightnessSliderState extends State<_LightnessSlider>
               child: ScaleTransition(
                 scale: _scaleController,
                 child: _Thumb(
-                  size: widget.thumbSize,
+                  size: 25,
                   color: HSLColor.fromAHSL(
                     1,
                     widget.hue,

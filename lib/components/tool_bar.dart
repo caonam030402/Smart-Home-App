@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_home/constants/path_icons.dart';
 import 'package:smart_home/styles/app_colors.dart';
 import 'package:smart_home/styles/app_styles.dart';
 import 'package:smart_home/styles/app_text.dart';
@@ -16,11 +14,10 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.white,
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
-          )),
+        bottomLeft: Radius.circular(25),
+        bottomRight: Radius.circular(25),
+      )),
       padding: EdgeInsets.symmetric(vertical: 15),
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -40,7 +37,7 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
                       height: 40,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(100)),
-                          color: AppColors.primary),
+                          color: AppColors.black.withOpacity(0.7)),
                       child: Icon(
                         Icons.arrow_back_ios_sharp,
                         size: 15,
@@ -50,7 +47,7 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   Text(
                     title,
-                    style: AppText.large.copyWith(
+                    style: AppText.heading4.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.black.withOpacity(0.8)),
                   ),

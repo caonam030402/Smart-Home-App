@@ -3,4 +3,5 @@ class PathRoute {
   static const splash = '/splash_screen';
   static const onboarding = '/onboarding_screen';
   static const lightManagement = '/light_management_screen';
+  static const home = '/home_screen';
 }
