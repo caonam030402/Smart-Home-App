@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:smart_home/components/pass_code.dart';
 import 'package:smart_home/constants/path_icons.dart';
 import 'package:smart_home/constants/path_images.dart';
 import 'package:smart_home/constants/path_routes.dart';
 import 'package:smart_home/styles/app_colors.dart';
+import 'package:smart_home/styles/app_styles.dart';
 import 'package:smart_home/styles/app_text.dart';
 
 class UnlockAppScreen extends StatefulWidget {
@@ -33,15 +35,20 @@ class _UnlockAppScreenState extends State<UnlockAppScreen> {
 
   void _authenticate() async {
     try {
-      _getAvailableBiometrics();
       bool authenticated = await auth.authenticate(
           authMessages: Iterable.empty(),
-          localizedReason: 'Subrice',
+          localizedReason: 'Vui lòng xác thực nó',
           options: AuthenticationOptions(
             stickyAuth: true,
             biometricOnly: true,
           ));
-    } catch (e) {}
+      print(authenticated);
+      if (authenticated) {
+        context.go(PathRoute.main);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void _getAvailableBiometrics() async {
@@ -90,22 +97,67 @@ class _UnlockAppScreenState extends State<UnlockAppScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 60,
+                      height: 40,
                     ),
-                    Text('Welcome back',
+                    Image.asset(PathImage.im_home_art, height: 200),
+
+                    Text('Welcome Back !',
                         style: AppText.heading1.copyWith(
                             color: AppColors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 40)),
+                    // Text(
+                    //   'Smart Home',
+                    //   style: AppText.medium.copyWith(color: AppColors.white),
+                    // ),
                     Text(
-                      'Unlock with Fingerprint',
-                      style: AppText.medium.copyWith(color: AppColors.white),
+                      'Unlock with passcode',
+                      style: AppText.large.copyWith(color: AppColors.white),
                     ),
-                    Spacer(),
+                    SizedBox(
+                      height: 30,
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          PassCode(),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 60,
+                            width: double.infinity,
+                            child: Center(
+                                child: Text(
+                              'Submit',
+                              style: AppText.large
+                                  .copyWith(color: AppColors.white),
+                            )),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: AppColors.white, width: 2),
+                                color: AppColors.white.withOpacity(0),
+                                borderRadius: BorderRadius.circular(15)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Text(
+                      'Or you unlock with Fingerprint',
+                      style: AppText.large.copyWith(color: AppColors.white),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Container(
-                      padding: EdgeInsets.all(30),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(100),
                         gradient: LinearGradient(
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
@@ -122,7 +174,7 @@ class _UnlockAppScreenState extends State<UnlockAppScreen> {
                             onTap: _authenticate,
                             child: SvgPicture.asset(
                               PathIcons.ic_touch_id,
-                              height: 80,
+                              height: 70,
                               color: AppColors.white,
                             ),
                           ),
@@ -143,29 +195,6 @@ class _UnlockAppScreenState extends State<UnlockAppScreen> {
                           //   color: AppColors.white,
                           // )
                         ],
-                      ),
-                    ),
-                    Spacer(),
-                    SlideAction(
-                      onSubmit: () {
-                        context.go(PathRoute.main);
-                        return null;
-                      },
-                      sliderButtonIcon: const Icon(
-                        Icons.keyboard_arrow_right,
-                        color: AppColors.primary,
-                      ),
-                      outerColor: AppColors.primary,
-                      innerColor: AppColors.white,
-                      elevation: 0,
-                      submittedIcon: const Icon(
-                        Icons.done,
-                        size: 30,
-                        color: AppColors.white,
-                      ),
-                      child: Text(
-                        'Mở khóa bằng mật khẩu',
-                        style: AppText.medium.copyWith(color: AppColors.white),
                       ),
                     ),
                   ],

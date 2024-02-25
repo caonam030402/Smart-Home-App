@@ -72,11 +72,15 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    const CircleAvatar(
-                      maxRadius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://scontent.fdad3-4.fna.fbcdn.net/v/t39.30808-6/306135507_1211755559394586_7445899947695751742_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9c7eae&_nc_eui2=AeG3XOU_FtPpLfAhVhnb4qJdhSPDzNnfc2iFI8PM2d9zaLRhiP2fvg7dEF11BeY4FSJunVUN8DrYOX5-pTLhc53R&_nc_ohc=c2nk4Fgzlw8AX_tYfi6&_nc_ht=scontent.fdad3-4.fna&oh=00_AfByyXoB50Mkdn2cz_-LPDeymEv05B9oWfn5C3Plm-VcXg&oe=65D8AA7E'),
-                    ),
+                    Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset(
+                          PathImage.im_avatar,
+                          width: 60,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

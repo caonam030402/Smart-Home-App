@@ -41,6 +41,8 @@ class ListDevices extends StatelessWidget {
                 isOnToDB: isOnLight,
                 name: 'Lighting'),
             Device(icon: PathIcons.ic_voice, isOnToDB: isOnFan, name: 'Fan'),
+            Device(icon: PathIcons.ic_voice, isOnToDB: isOnFan, name: 'Fan'),
+            Device(icon: PathIcons.ic_voice, isOnToDB: isOnFan, name: 'Fan'),
           ];
 
           return Skeletonizer(
