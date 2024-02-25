@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:smart_home/styles/app_colors.dart';
 import 'package:smart_home/styles/app_styles.dart';
 import 'package:smart_home/styles/app_text.dart';
@@ -151,10 +152,6 @@ class _CircleColorPickerState extends State<CircleColorPicker>
                                   Container(
                                     width: 150,
                                     height: 150,
-                                    decoration: BoxDecoration(
-                                      color: _color,
-                                      shape: BoxShape.circle,
-                                    ),
                                     child: Center(
                                         child: GestureDetector(
                                       onTap: () {
@@ -178,10 +175,13 @@ class _CircleColorPickerState extends State<CircleColorPicker>
                                             borderRadius:
                                                 BorderRadius.circular(200)),
                                         height: 30,
-                                        child:
-                                            const Center(child: Text('Update')),
+                                        child: Center(child: Text('Update')),
                                       ),
                                     )),
+                                    decoration: BoxDecoration(
+                                      color: _color,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
                                   const SizedBox(height: 16),
                                 ],
@@ -194,14 +194,14 @@ class _CircleColorPickerState extends State<CircleColorPicker>
                   ),
                 ],
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
-              const Text(
+              Text(
                 'Color intensity',
                 style: AppText.large,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
               Row(
@@ -321,9 +321,9 @@ class _LightnessSliderState extends State<_LightnessSlider>
               width: double.infinity,
               height: 5.5,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                borderRadius: BorderRadius.all(Radius.circular(6)),
                 gradient: LinearGradient(
-                  stops: const [0, 0.4, 1],
+                  stops: [0, 0.4, 1],
                   colors: [
                     HSLColor.fromAHSL(1, widget.hue, 1, 0).toColor(),
                     HSLColor.fromAHSL(1, widget.hue, 1, 0.5).toColor(),
@@ -361,7 +361,7 @@ class _LightnessSliderState extends State<_LightnessSlider>
       value: 1,
       lowerBound: 0.9,
       upperBound: 1,
-      duration: const Duration(milliseconds: 50),
+      duration: Duration(milliseconds: 50),
     );
   }
 
@@ -484,7 +484,7 @@ class _HuePickerState extends State<_HuePicker> with TickerProviderStateMixin {
       value: 1,
       lowerBound: 0.9,
       upperBound: 1,
-      duration: const Duration(milliseconds: 50),
+      duration: Duration(milliseconds: 50),
     );
   }
 
@@ -606,11 +606,11 @@ class _Thumb extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Color.fromARGB(255, 255, 255, 255),
         boxShadow: [
-          const BoxShadow(
+          BoxShadow(
             color: Color.fromARGB(16, 0, 0, 0),
             blurRadius: 4,
             spreadRadius: 4,

@@ -40,7 +40,7 @@ class _LightAdjustmentBarState extends State<LightAdjustmentBar> {
             width: double.infinity,
             height: 12,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(6)),
+              borderRadius: const BorderRadius.all(Radius.circular(6)),
               gradient: LinearGradient(
                 stops: [0, 0.4, 1],
                 colors: [

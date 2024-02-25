@@ -47,6 +47,8 @@ dependencies:
   flex_color_picker: ^3.3.1
   flutter_circle_color_picker: ^0.3.0
   skeletonizer: ^1.0.1
+  flutter_local_notifications: ^16.3.2
+  local_auth: ^2.2.0
 
 dev_dependencies:
   flutter_test:

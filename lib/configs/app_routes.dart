@@ -6,18 +6,25 @@ import 'package:smart_home/screens/light_management_screen.dart';
 import 'package:smart_home/screens/main_screen.dart';
 import 'package:smart_home/screens/onboarding_screen.dart';
 import 'package:smart_home/screens/splash_screen.dart';
+import 'package:smart_home/screens/unlock_app_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: PathRoute.splash,
+  initialLocation: PathRoute.unlock_app,
   routes: <RouteBase>[
     GoRoute(
       path: PathRoute.splash,
       builder: (BuildContext context, GoRouterState state) {
         return const SplashScreen();
+      },
+    ),
+    GoRoute(
+      path: PathRoute.unlock_app,
+      builder: (BuildContext context, GoRouterState state) {
+        return const UnlockAppScreen();
       },
     ),
     GoRoute(

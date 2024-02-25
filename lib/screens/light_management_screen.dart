@@ -1,7 +1,6 @@
 import 'package:blur/blur.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:slide_to_act/slide_to_act.dart';
 import 'package:smart_home/components/circle_color_picker.dart';
 import 'package:smart_home/components/tool_bar.dart';
 import 'package:smart_home/constants/path_images.dart';
@@ -22,7 +21,6 @@ class _LightManagementScreenState extends State<LightManagementScreen> {
   late bool isOnLight;
   double brightness = 50;
   late List<bool> isSelected;
-  final GlobalKey<SlideActionState> _key = GlobalKey();
 
   @override
   void initState() {
@@ -67,7 +65,7 @@ class _LightManagementScreenState extends State<LightManagementScreen> {
           action: Switch(
             inactiveTrackColor: AppColors.white,
             inactiveThumbColor: AppColors.primary,
-            trackOutlineWidth: MaterialStatePropertyAll(0),
+            trackOutlineWidth: const MaterialStatePropertyAll(0),
             activeColor: AppColors.primary,
             value: isOnLight,
             onChanged: (value) {
@@ -85,139 +83,137 @@ class _LightManagementScreenState extends State<LightManagementScreen> {
                   fit: BoxFit.cover)
               .blurred(
             colorOpacity: 0.1,
-            borderRadius: BorderRadius.horizontal(right: Radius.circular(5)),
+            borderRadius:
+                const BorderRadius.horizontal(right: Radius.circular(5)),
           ),
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: Color.fromARGB(255, 238, 241, 242).withOpacity(0.7),
+            color: const Color.fromARGB(255, 238, 241, 242).withOpacity(0.7),
           ),
           Stack(children: [
-            Container(
-              child: Column(
-                children: [
-                  SizedBox(height: 30),
-                  Center(
-                    child: CircleColorPicker(
-                      controller: _controller,
-                      onChanged: (color) {
-                        setState(() => currentColor = color);
-                      },
-                    ),
+            Column(
+              children: [
+                const SizedBox(height: 30),
+                Center(
+                  child: CircleColorPicker(
+                    controller: _controller,
+                    onChanged: (color) {
+                      setState(() => currentColor = color);
+                    },
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppStyles.paddingBothSidesPage),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Popular Presets',
-                            style: AppText.large,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              for (var i = 0; i < colors.length; i++)
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      databaseReference.update(
-                                        {
-                                          "light_control/colors/": {
-                                            "blue": _controller.color.blue,
-                                            "red": _controller.color.red,
-                                            "green": _controller.color.green
-                                          }
-                                        },
-                                      );
-                                      currentColor = colors[i];
-                                      _controller.color = currentColor;
-                                      for (var j = 0;
-                                          j < isSelected.length;
-                                          j++) {
-                                        isSelected[j] = (j == i);
-                                      }
-                                    });
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        height: 55,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppStyles.paddingBothSidesPage),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Popular Presets',
+                          style: AppText.large,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            for (var i = 0; i < colors.length; i++)
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    databaseReference.update(
+                                      {
+                                        "light_control/colors/": {
+                                          "blue": _controller.color.blue,
+                                          "red": _controller.color.red,
+                                          "green": _controller.color.green
+                                        }
+                                      },
+                                    );
+                                    currentColor = colors[i];
+                                    _controller.color = currentColor;
+                                    for (var j = 0;
+                                        j < isSelected.length;
+                                        j++) {
+                                      isSelected[j] = (j == i);
+                                    }
+                                  });
+                                },
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 55,
+                                    ),
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: colors[i],
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(100)),
                                       ),
-                                      Container(
-                                        width: 32,
-                                        height: 32,
-                                        decoration: BoxDecoration(
-                                          color: colors[i],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(100)),
-                                        ),
-                                      ),
-                                      Positioned(
-                                          right: 0,
-                                          left: 0,
-                                          bottom: 0,
-                                          child: isSelected[i]
-                                              ? Icon(
-                                                  Icons.arrow_drop_up,
-                                                  color: colors[i],
-                                                )
-                                              : Container())
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            'Brightness',
-                            style: AppText.large,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.light_mode,
-                                size: 18,
-                              ),
-                              Expanded(
-                                child: Slider(
-                                  inactiveColor:
-                                      AppColors.black.withOpacity(0.2),
-                                  activeColor: AppColors.white,
-                                  thumbColor: AppColors.primary,
-                                  value: brightness,
-                                  min: 0,
-                                  max: 100,
-                                  onChanged: (double value) {
-                                    setState(() {
-                                      brightness = value;
-                                    });
-                                  },
+                                    ),
+                                    Positioned(
+                                        right: 0,
+                                        left: 0,
+                                        bottom: 0,
+                                        child: isSelected[i]
+                                            ? Icon(
+                                                Icons.arrow_drop_up,
+                                                color: colors[i],
+                                              )
+                                            : Container())
+                                  ],
                                 ),
                               ),
-                              Text('50%')
-                            ],
-                          ),
-                          Spacer(),
-                          SizedBox(
-                            height: AppStyles.paddingBothSidesPage,
-                          )
-                        ],
-                      ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Text(
+                          'Brightness',
+                          style: AppText.large,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.light_mode,
+                              size: 18,
+                            ),
+                            Expanded(
+                              child: Slider(
+                                inactiveColor: AppColors.black.withOpacity(0.2),
+                                activeColor: AppColors.white,
+                                thumbColor: AppColors.primary,
+                                value: brightness,
+                                min: 0,
+                                max: 100,
+                                onChanged: (double value) {
+                                  setState(() {
+                                    brightness = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            const Text('50%')
+                          ],
+                        ),
+                        const Spacer(),
+                        const SizedBox(
+                          height: AppStyles.paddingBothSidesPage,
+                        )
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Positioned(
               child: !isOnLight
@@ -271,9 +267,9 @@ class _LightManagementScreenState extends State<LightManagementScreen> {
             //           Icons.done,
             //           size: 30,
             //           color: AppColors.black,
-            //         ),
-            //       ),
-            //     ),
+            //         ),5
+            //       ),2
+            //     ),5555
             //   )
             // ],
           ])

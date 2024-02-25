@@ -9,4 +9,6 @@ class PathIcons {
   static const ic_menu = '${icon}ic_menu.svg';
   static const ic_sunny = '${icon}ic_sunny.svg';
   static const ic_power = '${icon}ic_power.svg';
+  static const ic_touch_id = '${icon}ic_touch_id.svg';
+  static const ic_face_id = '${icon}ic_face_id.svg';
 }

@@ -13,7 +13,7 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(25),
         bottomRight: Radius.circular(25),
@@ -23,7 +23,7 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
             horizontal: AppStyles.paddingBothSidesPage),
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,36 +31,34 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
                   GestureDetector(
                     onTap: () => {context.pop(true)},
                     child: Container(
-                      padding: EdgeInsets.all(7),
+                      padding: const EdgeInsets.all(7),
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(100)),
                           color: AppColors.black.withOpacity(0.7)),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back_ios_sharp,
                         size: 15,
                         color: AppColors.white,
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: 0,
-                    left: 0,
-                    child: Text(
-                      title,
-                      style: AppText.heading4.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.black.withOpacity(0.8)),
-                    ),
+                  Text(
+                    title,
+                    style: AppText.heading4.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.black.withOpacity(0.8)),
                   ),
                   action ??
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         width: 32,
                         height: 32,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5)),
                             color: AppColors.black.withOpacity(0)),
                       ),
                 ],

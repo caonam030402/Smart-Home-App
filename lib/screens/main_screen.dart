@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   final pages = <Widget>[
-    HomeScreen(),
+    const HomeScreen(),
     const Center(child: Text('Message')),
   ];
 }
@@ -57,10 +57,9 @@ class MyBottomNavigation extends StatefulWidget {
 
 class _MyBottomNavigationState extends State<MyBottomNavigation> {
   DatabaseReference ref = FirebaseDatabase.instance.ref("");
-  SpeechToText _speechToText = SpeechToText();
+  final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
-  bool _isIgnor = false;
 
   @override
   void initState() {
@@ -132,7 +131,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
       _lastWords = result.recognizedWords;
     });
     Future.delayed(
-      Duration(milliseconds: 3000),
+      const Duration(milliseconds: 3000),
       () {
         setState(() {
           _speechEnabled = false;

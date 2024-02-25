@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/components/card_device.dart';
 import 'package:smart_home/components/list_devices.dart';
-import 'package:smart_home/constants/path_icons.dart';
 import 'package:smart_home/styles/app_colors.dart';
 
 class TabBarHome extends StatefulWidget {

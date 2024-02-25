@@ -14,7 +14,7 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<SlideActionState> _key = GlobalKey();
+    final GlobalKey<SlideActionState> key = GlobalKey();
     return Scaffold(
       body: Stack(
         children: [
@@ -85,9 +85,10 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 SlideAction(
-                  key: _key,
+                  key: key,
                   onSubmit: () {
                     context.go(PathRoute.main);
+                    return null;
                   },
                   sliderButtonIcon: const Icon(
                     Icons.keyboard_arrow_right,
@@ -96,14 +97,14 @@ class OnboardingScreen extends StatelessWidget {
                   outerColor: AppColors.primary,
                   innerColor: AppColors.white,
                   elevation: 0,
-                  child: Text(
-                    'Start',
-                    style: AppText.heading4.copyWith(color: AppColors.white),
-                  ),
                   submittedIcon: const Icon(
                     Icons.done,
                     size: 30,
                     color: AppColors.white,
+                  ),
+                  child: Text(
+                    'Start',
+                    style: AppText.heading4.copyWith(color: AppColors.white),
                   ),
                 ),
               ],
